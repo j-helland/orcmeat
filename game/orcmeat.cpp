@@ -3,6 +3,7 @@
 
 // extern
 #include <nlohmann/json.hpp>
+
 #include <GLFW/glfw3.h>
 
 // game_library
@@ -39,6 +40,8 @@ void game_loop(GLFWwindow* window) {
         // update
 
         // render
+        // Need to do glClear before glfwSwapBuffers, otherwise we get crazy flashing (on my macbook at least) due to use of uninitialized framebuffer memory. 
+        glClear(GL_COLOR_BUFFER_BIT); 
         glfwSwapBuffers(window);
     }
 
@@ -62,6 +65,7 @@ GLFWwindow* open_window() {
     glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API); // As opposed to OpenGL ES or smth
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);  // MacOS bullshit
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Create window which also serves as our context
