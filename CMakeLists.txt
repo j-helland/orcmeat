@@ -4,7 +4,7 @@ project(
     OrcMeat 
     VERSION 0.0 
     DESCRIPTION "How tf do I use CMake?"
-    LANGUAGES CXX)
+    LANGUAGES CXX C)
 
 # CMake 3.11+ Downloads stuff during configure step
 include(FetchContent)

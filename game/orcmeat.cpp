@@ -2,8 +2,7 @@
 #include <iostream>
 
 // extern
-#include <nlohmann/json.hpp>
-
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 // game_library
@@ -11,7 +10,6 @@
 
 // TODO: probably move window creation/management to separate source file
 // TODO: probably move main game loop to a "game_engine" or smth in the game library
-// TODO: glad shit I think
 
 GLFWwindow* open_window();
 void error(int code, const char* description, bool quit);
@@ -19,12 +17,12 @@ void glfw_error(int code, const char* description);
 void game_loop(GLFWwindow* window);
 
 int main(void) {
-    
-    print_welcome_message();
-    GLFWwindow* window = open_window();
 
+    // Create window and start game loop
+    GLFWwindow* window = open_window();
     game_loop(window);
 
+    // Cleanup
     glfwDestroyWindow(window);
     glfwTerminate();
     exit(EXIT_SUCCESS);
@@ -72,6 +70,9 @@ GLFWwindow* open_window() {
     GLFWwindow* window = glfwCreateWindow(640, 480, "Orcmeat", NULL, NULL);
     if (!window) error(-1, "could not create window", true);
     glfwMakeContextCurrent(window);
+    
+    // Initialize GLAD
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) error(-1, "couldn't initialize GLAD", true);
 
     // Enable Blending
     glEnable(GL_BLEND);
